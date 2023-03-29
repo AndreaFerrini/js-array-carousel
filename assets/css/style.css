@@ -1,4 +1,5 @@
 * {
+    padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
@@ -7,23 +8,92 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-}
-
-.slider {
-    display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-.item.active {
+.carosello {
+    height: 50%;
+    width: 50%;
+    display: flex;
+}
+
+.item img {
+    /* width: 673px;
+    height: 481px; */
+    width: 100%;
+    height: 100%;
     display: block;
+    object-fit: cover;
 }
 
-.item {
+.items .item {
+    opacity: 0;
     display: none;
 }
 
-.next, .prev {
-    font-size: 35px;
+.items .item.active {
+    opacity: 1;
+    display: block;
+}
+
+.thumbs {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.thumb {
+    width: 100%;
+    height: calc(100% / 5);
+}
+
+.thumbs img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.5);
+}
+
+.thumbs .active img {
+    filter: brightness(1);
+}
+
+.items {
+    width: 70%;
+}
+
+.items .item {
+    height: 100%;
+}
+
+.thumbs {
+    width: 30%;
+    position: relative;
+}
+
+.prev {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.next {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.prev i,
+.next i {
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
     cursor: pointer;
 }

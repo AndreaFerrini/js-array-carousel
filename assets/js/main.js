@@ -5,39 +5,68 @@
 //Bonus1: Aggiungere il ciclo infinito del carosello. Ovvero se è attiva la prima immagine e l'utente clicca la freccia per andare all’immagine precedente, dovrà comparire l’ultima immagine dell’array e viceversa.
 //Bonus2: Aggiungere la visualizzazione di tutte le thumbnails sulla destra dell’immagine grande attiva, come nello screenshot proposto. Tutte le miniature avranno un layer di opacità scura, tranne quella corrispondente all’immagine attiva, che invece avrà un bordo colorato. Al click delle frecce, oltre al cambio di immagine attiva, gestire il cambio di miniatura attiva.
 
-const prev = document.querySelector(`.prev`)
-const next = document.querySelector(`.next`)
+const path = "./assets/img/"
 
-console.log( prev, next )
+let images = [
+    '01.webp',
+    '02.webp',
+    '03.webp',
+    '04.webp',
+    '05.webp',
+]
 
-next.addEventListener( `click`, function(){
-    let activeItem = document.querySelector(`.item.active`)
-    console.log( activeItem )
+const immaginePrincipale = document.querySelector(`.items`);
+const immaginiThumbs = document.querySelector(`.thumbs`)
 
-    let itemToActive = activeItem.nextElementSibling
-    console.log( itemToActive )
+console.log( immaginePrincipale, immaginiThumbs )
 
-    if( activeItem.classList.contains(`last`)) {
-        itemToActive = document.querySelector(`.item.first`)
+for( let i = 0; i < images.length; i++){
+
+    immaginePrincipale.innerHTML += `
+    <div class="item">
+        <img src="${path}${images[i]}" alt="">
+    </div>
+    `
+    immaginiThumbs.innerHTML += `
+    <div class="thumb">
+        <img src="${path}${images[i]}" alt="">
+    </div>
+    `
+}
+
+let active = 0
+
+immaginePrincipale.getElementsByClassName('item')[active].classList.add('active')
+immaginiThumbs.getElementsByClassName('thumb')[active].classList.add('active')
+
+
+const prev = document.querySelector('.prev')
+const next = document.querySelector('.next')
+
+prev.addEventListener('click', function(){
+    if ( active == 0 ){
+        active = images.length - 1
+    } else {
+        active--;
     }
 
-    activeItem.classList.remove(`active`)
+    document.querySelector('.item.active').classList.remove('active');
+    immaginePrincipale.getElementsByClassName('item')[active].classList.add('active')
 
-    itemToActive.classList.add(`active`)
+    document.querySelector('.thumb.active').classList.remove('active');
+    immaginiThumbs.getElementsByClassName('item')[active].classList.add('active')
 })
 
-prev.addEventListener( `click`, function(){
-    let activeItem = document.querySelector(`.item.active`)
-    console.log( activeItem )
-
-    let itemToActive = activeItem.previousElementSibling
-    console.log( itemToActive )
-
-    if( activeItem.classList.contains(`first`)) {
-        itemToActive = document.querySelector(`.item.last`)
+next.addEventListener('click', function(){
+    if ( active == images.length - 1 ){
+        active = 0
+    } else {
+        active++;
     }
 
-    activeItem.classList.remove(`active`)
+    document.querySelector('.item.active').classList.remove('active');
+    immaginePrincipale.getElementsByClassName('item')[active].classList.add('active')
 
-    itemToActive.classList.add( `active` )
+    document.querySelector('.thumb.active').classList.remove('active');
+    immaginiThumbs.getElementsByClassName('thumb')[active].classList.add('active')
 })
